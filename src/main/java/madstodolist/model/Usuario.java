@@ -32,9 +32,11 @@ public class Usuario implements Serializable {
 
     // Constructor vacío necesario para JPA/Hibernate.
     // No debe usarse desde la aplicación.
-    public Usuario() {}
+    public Usuario() {
+    }
 
-    // Constructor público con los atributos obligatorios. En este caso el correo electrónico.
+    // Constructor público con los atributos obligatorios. En este caso el correo
+    // electrónico.
     public Usuario(String email) {
         this.email = email;
     }
@@ -87,10 +89,12 @@ public class Usuario implements Serializable {
         return tareas;
     }
 
-    // Método helper para añadir una tarea a la lista y establecer la relación inversa
+    // Método helper para añadir una tarea a la lista y establecer la relación
+    // inversa
     public void addTarea(Tarea tarea) {
         // Si la tarea ya está en la lista, no la añadimos
-        if (tareas.contains(tarea)) return;
+        if (tareas.contains(tarea))
+            return;
         // Añadimos la tarea a la lista
         tareas.add(tarea);
         // Establecemos la relación inversa del usuario en la tarea
@@ -101,8 +105,10 @@ public class Usuario implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Usuario usuario = (Usuario) o;
         if (id != null && usuario.id != null)
             // Si tenemos los ID, comparamos por ID
