@@ -17,7 +17,6 @@ import java.util.List;
 
 import java.util.stream.Collectors;
 
-
 @Service
 public class TareaService {
 
@@ -62,8 +61,10 @@ public class TareaService {
     public TareaData findById(Long tareaId) {
         logger.debug("Buscando tarea " + tareaId);
         Tarea tarea = tareaRepository.findById(tareaId).orElse(null);
-        if (tarea == null) return null;
-        else return modelMapper.map(tarea, TareaData.class);
+        if (tarea == null)
+            return null;
+        else
+            return modelMapper.map(tarea, TareaData.class);
     }
 
     @Transactional
