@@ -8,18 +8,18 @@ import java.util.Date;
 // Clase de datos para el formulario de registro
 public class RegistroData {
     @Email
-    private String eMail;
+    private String email;
     private String password;
     private String nombre;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date fechaNacimiento;
 
     public String getEmail() {
-        return eMail;
+        return email;
     }
 
     public void setEmail(String eMail) {
-        this.eMail = eMail;
+        this.email = eMail;
     }
 
     public String getPassword() {
