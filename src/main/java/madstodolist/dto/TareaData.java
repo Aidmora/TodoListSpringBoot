@@ -10,7 +10,7 @@ public class TareaData implements Serializable {
 
     private Long id;
     private String titulo;
-    private Long usuarioId;  // Esta es la ID del usuario asociado
+    private Long usuarioId; // Esta es la ID del usuario asociado
 
     // Getters y setters
 
@@ -43,8 +43,10 @@ public class TareaData implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TareaData)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof TareaData))
+            return false;
         TareaData tareaData = (TareaData) o;
         return Objects.equals(id, tareaData.id);
     }

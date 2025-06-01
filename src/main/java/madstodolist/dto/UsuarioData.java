@@ -38,9 +38,13 @@ public class UsuarioData {
         this.nombre = nombre;
     }
 
-    public void setPassword(String password) { this.password = password; }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-    public String getPassword() { return password; }
+    public String getPassword() {
+        return password;
+    }
 
     public Date getFechaNacimiento() {
         return fechaNacimiento;
@@ -55,8 +59,10 @@ public class UsuarioData {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UsuarioData)) return false;
+        if (this == o)
+            return true;
+        if (!(o instanceof UsuarioData))
+            return false;
         UsuarioData that = (UsuarioData) o;
         return Objects.equals(getId(), that.getId());
     }
