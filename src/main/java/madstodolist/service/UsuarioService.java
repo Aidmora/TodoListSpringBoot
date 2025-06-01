@@ -17,7 +17,9 @@ public class UsuarioService {
 
     Logger logger = LoggerFactory.getLogger(UsuarioService.class);
 
-    public enum LoginStatus {LOGIN_OK, USER_NOT_FOUND, ERROR_PASSWORD}
+    public enum LoginStatus {
+        LOGIN_OK, USER_NOT_FOUND, ERROR_PASSWORD
+    }
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -58,7 +60,8 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public UsuarioData findByEmail(String email) {
         Usuario usuario = usuarioRepository.findByEmail(email).orElse(null);
-        if (usuario == null) return null;
+        if (usuario == null)
+            return null;
         else {
             return modelMapper.map(usuario, UsuarioData.class);
         }
@@ -67,7 +70,8 @@ public class UsuarioService {
     @Transactional(readOnly = true)
     public UsuarioData findById(Long usuarioId) {
         Usuario usuario = usuarioRepository.findById(usuarioId).orElse(null);
-        if (usuario == null) return null;
+        if (usuario == null)
+            return null;
         else {
             return modelMapper.map(usuario, UsuarioData.class);
         }
