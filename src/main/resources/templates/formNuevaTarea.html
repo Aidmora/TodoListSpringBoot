@@ -5,15 +5,10 @@
   <body>
     <div th:replace="fragments :: navbar"></div>
     <div class="container-fluid">
-      <h2
-        th:text="'Nueva tarea para el usuario ' + ${usuario.getNombre()}"
-      ></h2>
-
-      <form
-        method="post"
-        th:action="@{/usuarios/{id}/tareas/nueva(id=${usuario.id})}"
-        th:object="${tareaData}"
-      >
+      <h2 th:text="'Nueva tarea para el usuario ' + ${usuario.getNombre()}"></h2>
+      <form method="post"
+            th:action="@{/usuarios/{id}/tareas/nueva(id=${usuario.id})}"
+            th:object="${tareaData}">
         <div class="col-6">
           <div class="form-group">
             <label for="titulo">Título de la tarea:</label>
