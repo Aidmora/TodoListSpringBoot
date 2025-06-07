@@ -89,7 +89,6 @@ public class UsuarioServiceTest {
         });
     }
 
-
     @Test
     public void servicioRegistroUsuarioExcepcionConEmailRepetido() {
         // GIVEN
@@ -114,7 +113,8 @@ public class UsuarioServiceTest {
     public void servicioRegistroUsuarioDevuelveUsuarioConId() {
 
         // WHEN
-        // Si registramos en el sistema un usuario con un e-mail no existente en la base de datos,
+        // Si registramos en el sistema un usuario con un e-mail no existente en la base
+        // de datos,
         // y un password no nulo,
 
         UsuarioData usuario = new UsuarioData();
