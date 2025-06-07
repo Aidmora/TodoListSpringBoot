@@ -29,7 +29,8 @@ public class TareaServiceTest {
     TareaService tareaService;
 
     // Método para inicializar los datos de prueba en la BD
-    // Devuelve un mapa con los identificadores del usuario y de la primera tarea añadida
+    // Devuelve un mapa con los identificadores del usuario y de la primera tarea
+    // añadida
     Map<String, Long> addUsuarioTareasBD() {
         UsuarioData usuario = new UsuarioData();
         usuario.setEmail("user@ua");
@@ -104,7 +105,8 @@ public class TareaServiceTest {
         tareaService.modificaTarea(tareaId, "Limpiar los cristales del coche");
 
         // THEN
-        // al buscar por el identificador en la base de datos se devuelve la tarea modificada
+        // al buscar por el identificador en la base de datos se devuelve la tarea
+        // modificada
 
         TareaData tareaBD = tareaService.findById(tareaId);
         assertThat(tareaBD.getTitulo()).isEqualTo("Limpiar los cristales del coche");
@@ -138,13 +140,13 @@ public class TareaServiceTest {
     }
 
     @Test
-    public void asignarEtiquetaATarea(){
+    public void asignarEtiquetaATarea() {
 
         Map<String, Long> ids = addUsuarioTareasBD();
         Long usuarioId = ids.get("usuarioId");
         Long tareaId = ids.get("tareaId");
 
-        assertThat(tareaService.usuarioContieneTarea(usuarioId,tareaId)).isTrue();
+        assertThat(tareaService.usuarioContieneTarea(usuarioId, tareaId)).isTrue();
     }
 
 }
