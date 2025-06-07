@@ -1,17 +1,58 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head th:fragment="head (titulo)">
+  <head th:fragment="head (titulo)">
     <meta charset="UTF-8"/>
     <title th:text="${titulo}"></title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-</head>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+  </head>
 
-<div th:fragment="javascript">
+  <!-- fragmento para la barra de menú -->
+  <div th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" th:href="@{/acerca}">ToDoList</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse"
+              data-target="#navbarNav" aria-controls="navbarNav"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/usuarios/{id}/tareas(id=${session.idUsuarioLogeado})}">
+              Tareas
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item" th:if="${session.idUsuarioLogeado == null}">
+            <a class="nav-link" th:href="@{/login}">Login</a>
+          </li>
+          <li class="nav-item" th:if="${session.idUsuarioLogeado == null}">
+            <a class="nav-link" th:href="@{/registro}">Registro</a>
+          </li>
+          <li class="nav-item dropdown" th:if="${session.idUsuarioLogeado != null}">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown"
+               role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+              <span th:text="${usuarioLogeado.nombre}">Usuario</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+              <a class="dropdown-item" th:href="@{/cuenta}">Cuenta</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" th:href="@{/logout}">
+                Cerrar sesión <span th:text="${usuarioLogeado.nombre}">Usuario</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div th:fragment="javascript">
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/popper.min.js}"></script>
-    
     <script th:src="@{/js/bootstrap.min.js}"></script>
-</div>
+  </div>
 
 </html>
