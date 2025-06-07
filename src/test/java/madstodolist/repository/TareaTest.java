@@ -1,6 +1,5 @@
 package madstodolist.repository;
 
-
 import madstodolist.model.Tarea;
 import madstodolist.model.Usuario;
 import org.junit.jupiter.api.Assertions;
@@ -218,7 +217,6 @@ public class TareaTest {
         usuarioBD = usuarioRepository.findById(usuarioId).orElse(null);
         assertThat(usuarioBD.getTareas()).contains(tareaBD);
     }
-
 
     @Test
     @Transactional
