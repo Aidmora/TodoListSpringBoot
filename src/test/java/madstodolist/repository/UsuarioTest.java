@@ -66,7 +66,6 @@ public class UsuarioTest {
         assertThat(usuario1).isNotEqualTo(usuario3);
     }
 
-
     @Test
     public void comprobarIgualdadUsuariosConId() {
         // GIVEN
