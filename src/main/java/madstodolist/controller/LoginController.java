@@ -40,10 +40,10 @@ public class LoginController {
     public String loginSubmit(@ModelAttribute LoginData loginData, Model model, HttpSession session) {
 
         // Llamada al servicio para comprobar si el login es correcto
-        UsuarioService.LoginStatus loginStatus = usuarioService.login(loginData.getEmail(), loginData.getPassword());
+        UsuarioService.LoginStatus loginStatus = usuarioService.login(loginData.geteMail(), loginData.getPassword());
 
         if (loginStatus == UsuarioService.LoginStatus.LOGIN_OK) {
-            UsuarioData usuario = usuarioService.findByEmail(loginData.getEmail());
+            UsuarioData usuario = usuarioService.findByEmail(loginData.geteMail());
 
             managerUserSession.logearUsuario(usuario.getId());
 
