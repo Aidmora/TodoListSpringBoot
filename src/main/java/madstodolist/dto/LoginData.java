@@ -2,15 +2,15 @@ package madstodolist.dto;
 
 // Clase de datos para el formulario de login
 public class LoginData {
-    private String email;
+    private String eMail;
     private String password;
 
-    public String getEmail() {
-        return email;
+    public String geteMail() {
+        return eMail;
     }
 
-    public void setEmail(String eMail) {
-        this.email = eMail;
+    public void seteMail(String eMail) {
+        this.eMail = eMail;
     }
 
     public String getPassword() {
