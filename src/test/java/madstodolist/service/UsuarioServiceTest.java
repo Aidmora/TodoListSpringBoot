@@ -9,6 +9,8 @@ import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 @SpringBootTest
 @Sql(scripts = "/clean-db.sql")
 public class UsuarioServiceTest {
@@ -152,5 +154,27 @@ public class UsuarioServiceTest {
         assertThat(usuario.getId()).isEqualTo(usuarioId);
         assertThat(usuario.getEmail()).isEqualTo("user@ua");
         assertThat(usuario.getNombre()).isEqualTo("Usuario Ejemplo");
+    }
+
+    @Test
+    void testListAllUsuarios() {
+        // GIVEN: dos usuarios en la BD
+        UsuarioData u1 = new UsuarioData();
+        u1.setEmail("a@a.com");
+        u1.setPassword("p");
+        UsuarioData saved1 = usuarioService.registrar(u1);
+
+        UsuarioData u2 = new UsuarioData();
+        u2.setEmail("b@b.com");
+        u2.setPassword("p");
+        UsuarioData saved2 = usuarioService.registrar(u2);
+
+        // WHEN
+        List<UsuarioData> lista = usuarioService.listAllUsuarios();
+
+        // THEN
+        assertThat(lista).hasSize(2)
+                .extracting(UsuarioData::getEmail)
+                .containsExactlyInAnyOrder("a@a.com", "b@b.com");
     }
 }
