@@ -9,6 +9,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @SpringBootTest
@@ -176,5 +177,32 @@ public class UsuarioServiceTest {
         assertThat(lista).hasSize(2)
                 .extracting(UsuarioData::getEmail)
                 .containsExactlyInAnyOrder("a@a.com", "b@b.com");
+    }
+
+    @Test
+    void testFindByIdReturnsUsuario() throws Exception {
+        // GIVEN
+        UsuarioData u = new UsuarioData();
+        u.setEmail("x@x.com");
+        u.setPassword("pwd");
+        u.setNombre("Xavier");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        u.setFechaNacimiento(sdf.parse("1990-05-10"));
+        UsuarioData saved = usuarioService.registrar(u);
+
+        // WHEN
+        UsuarioData found = usuarioService.findById(saved.getId());
+
+        // THEN
+        assertThat(found).isNotNull();
+        assertThat(found.getId()).isEqualTo(saved.getId());
+        assertThat(found.getEmail()).isEqualTo("x@x.com");
+        assertThat(found.getNombre()).isEqualTo("Xavier");
+        assertThat(found.getFechaNacimiento()).isEqualTo(sdf.parse("1990-05-10"));
+    }
+
+    @Test
+    void testFindByIdNotFound() {
+        assertThat(usuarioService.findById(999L)).isNull();
     }
 }
