@@ -4,6 +4,7 @@ import madstodolist.dto.UsuarioData;
 import madstodolist.service.UsuarioService;
 import madstodolist.repository.UsuarioRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -70,5 +71,31 @@ class RegisteredControllerTest {
         mockMvc.perform(get("/registrados"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("navbar navbar-expand-lg")));
+    }
+    @Test
+    @DisplayName("GET /registrados/{id} muestra detalles de usuario")
+    void getUsuarioDetailShowsUsuario() throws Exception {
+        // GIVEN
+        UsuarioData u = new UsuarioData();
+        u.setEmail("jane@doe.com");
+        u.setPassword("pwd");
+        u.setNombre("Jane Doe");
+        UsuarioData saved = usuarioService.registrar(u);
+
+        // WHEN / THEN
+        mockMvc.perform(get("/registrados/" + saved.getId()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("usuario"))
+                .andExpect(content().string(containsString("Usuario " + saved.getId())))
+                .andExpect(content().string(containsString("jane@doe.com")))
+                .andExpect(content().string(containsString("Jane Doe")))
+                .andExpect(content().string(containsString("Fecha de nacimiento")));
+    }
+
+    @Test
+    @DisplayName("GET /registrados/{id} inexistente devuelve 404")
+    void getUsuarioDetailNotFoundReturns404() throws Exception {
+        mockMvc.perform(get("/registrados/9999"))
+                .andExpect(status().isNotFound());
     }
 }
