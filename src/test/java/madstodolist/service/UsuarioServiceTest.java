@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -204,5 +205,28 @@ public class UsuarioServiceTest {
     @Test
     void testFindByIdNotFound() {
         assertThat(usuarioService.findById(999L)).isNull();
+    }
+
+    @Test
+    void adminExistsBehaviour() {
+        // al principio no hay admin
+        assertThat(usuarioService.adminExists()).isFalse();
+
+        // registramos uno
+        UsuarioData admin = new UsuarioData();
+        admin.setEmail("a@a.com");
+        admin.setPassword("p");
+        admin.setAdministrador(true);
+        usuarioService.registrar(admin);
+
+        assertThat(usuarioService.adminExists()).isTrue();
+
+        // intentar registrar otro admin falla
+        UsuarioData otro = new UsuarioData();
+        otro.setEmail("b@b.com");
+        otro.setPassword("p");
+        otro.setAdministrador(true);
+        assertThrows(UsuarioServiceException.class,
+                () -> usuarioService.registrar(otro));
     }
 }

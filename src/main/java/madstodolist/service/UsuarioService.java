@@ -28,6 +28,12 @@ public class UsuarioService {
     @Autowired
     private ModelMapper modelMapper;
 
+    // Comprueba si existe algún usuario administrador en la base de datos.
+    @Transactional(readOnly = true)
+    public boolean adminExists() {
+        return usuarioRepository.countByAdministradorTrue() > 0;
+    }
+
     @Transactional(readOnly = true)
     public LoginStatus login(String eMail, String password) {
         Optional<Usuario> usuario = usuarioRepository.findByEmail(eMail);
@@ -52,8 +58,11 @@ public class UsuarioService {
             throw new UsuarioServiceException("El usuario no tiene email");
         else if (usuario.getPassword() == null)
             throw new UsuarioServiceException("El usuario no tiene password");
+        else if (usuario.isAdministrador() && adminExists())
+            throw new UsuarioServiceException("Ya existe un administrador");
         else {
             Usuario usuarioNuevo = modelMapper.map(usuario, Usuario.class);
+            usuarioNuevo.setAdministrador(usuario.isAdministrador());
             usuarioNuevo = usuarioRepository.save(usuarioNuevo);
             return modelMapper.map(usuarioNuevo, UsuarioData.class);
         }
