@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="fragments :: head(titulo='No autorizado')"></head>
+  <body>
+    <div th:replace="fragments :: navbar"></div>
+    <div class="container mt-5">
+      <div class="alert alert-warning">
+        <h3>No autorizado</h3>
+        <p>No tienes permiso suficiente para acceder a esta página.</p>
+      </div>
+      <a class="btn btn-primary" th:href="@{/login}">Ir al login</a>
+    </div>
+    <div th:replace="fragments :: javascript"></div>
+  </body>
+</html>
