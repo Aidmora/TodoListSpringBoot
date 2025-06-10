@@ -21,6 +21,7 @@ public class Usuario implements Serializable {
     private String email;
     private String nombre;
     private String password;
+    @Column(name = "administrador", nullable = false)
     private boolean administrador = false;
 
     @Column(name = "fecha_nacimiento")
