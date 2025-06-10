@@ -21,6 +21,8 @@ public class Usuario implements Serializable {
     private String email;
     private String nombre;
     private String password;
+    private boolean administrador = false;
+
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
@@ -87,6 +89,14 @@ public class Usuario implements Serializable {
 
     public Set<Tarea> getTareas() {
         return tareas;
+    }
+
+    public boolean isAdministrador() {
+        return administrador;
+    }
+
+    public void setAdministrador(boolean administrador) {
+        this.administrador = administrador;
     }
 
     // Método helper para añadir una tarea a la lista y establecer la relación
