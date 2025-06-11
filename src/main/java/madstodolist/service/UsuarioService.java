@@ -16,11 +16,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
-
     Logger logger = LoggerFactory.getLogger(UsuarioService.class);
 
     public enum LoginStatus {
-        LOGIN_OK, USER_NOT_FOUND, ERROR_PASSWORD
+        LOGIN_OK,
+        USER_NOT_FOUND,
+        ERROR_PASSWORD,
+        BLOQUEADO
     }
 
     @Autowired
@@ -41,6 +43,8 @@ public class UsuarioService {
             return LoginStatus.USER_NOT_FOUND;
         } else if (!usuario.get().getPassword().equals(password)) {
             return LoginStatus.ERROR_PASSWORD;
+        } else if (usuario.get().isBloqueado()) {
+            return LoginStatus.BLOQUEADO;
         } else {
             return LoginStatus.LOGIN_OK;
         }
@@ -95,4 +99,20 @@ public class UsuarioService {
                 .map(u -> modelMapper.map(u, UsuarioData.class))
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    public void setBloqueoUsuario(Long id, boolean bloqueado) {
+        Usuario u = usuarioRepository.findById(id)
+                .orElseThrow(() -> new UsuarioServiceException("Usuario no encontrado"));
+        u.setBloqueado(bloqueado);
+        usuarioRepository.save(u);
+    }
+
+    @Transactional(readOnly = true)
+    public boolean isUsuarioBloqueado(Long id) {
+        return usuarioRepository.findById(id)
+                .map(Usuario::isBloqueado)
+                .orElse(false);
+    }
+
 }

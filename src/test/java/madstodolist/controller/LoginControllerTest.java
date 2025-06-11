@@ -67,4 +67,21 @@ public class LoginControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/registrados"));
     }
+
+    @Test
+    void testLoginUsuarioBloqueado() throws Exception {
+        // registramos y bloqueamos
+        UsuarioData u = new UsuarioData();
+        u.setEmail("b@b.com");
+        u.setPassword("p");
+        UsuarioData saved = usuarioService.registrar(u);
+        usuarioService.setBloqueoUsuario(saved.getId(), true);
+
+        mockMvc.perform(post("/login")
+                .param("eMail", "b@b.com")
+                .param("password", "p"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("formLogin"))
+                .andExpect(content().string(containsString("Tu cuenta está bloqueada")));
+    }
 }

@@ -9,14 +9,27 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>Correo electrónico</th>
+            <th>ID</th><th>Email</th><th>Admin</th><th>Bloqueado</th><th>Acción</th>
           </tr>
         </thead>
         <tbody>
-          <tr th:each="usuario : ${usuarios}">
-            <td th:text="${usuario.id}">1</td>
-            <td th:text="${usuario.email}">user@ua</td>
+          <tr th:each="u : ${usuarios}">
+            <td th:text="${u.id}">1</td>
+            <td th:text="${u.email}">user@ua</td>
+            <td><span th:text="${u.administrador}"/></td>
+            <td>
+              <span th:text="${u.bloqueado} ? 'Sí' : 'No'"/>
+            </td>
+            <td>
+              <form th:action="@{/registrados/{id}/bloquear(id=${u.id})}" method="post"
+                    th:if="${!u.bloqueado}">
+                <button class="btn btn-warning btn-sm" type="submit">Bloquear</button>
+              </form>
+              <form th:action="@{/registrados/{id}/habilitar(id=${u.id})}" method="post"
+                    th:if="${u.bloqueado}">
+                <button class="btn btn-success btn-sm" type="submit">Habilitar</button>
+              </form>
+            </td>
           </tr>
         </tbody>
       </table>

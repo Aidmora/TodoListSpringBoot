@@ -229,4 +229,21 @@ public class UsuarioServiceTest {
         assertThrows(UsuarioServiceException.class,
                 () -> usuarioService.registrar(otro));
     }
+
+    @Test
+    void testBloquearYHabilitarUsuario() {
+        // registramos un usuario
+        UsuarioData u = new UsuarioData();
+        u.setEmail("x@x.com");
+        u.setPassword("p");
+        UsuarioData saved = usuarioService.registrar(u);
+
+        // bloqueamos
+        usuarioService.setBloqueoUsuario(saved.getId(), true);
+        assertThat(usuarioService.isUsuarioBloqueado(saved.getId())).isTrue();
+
+        // habilitamos
+        usuarioService.setBloqueoUsuario(saved.getId(), false);
+        assertThat(usuarioService.isUsuarioBloqueado(saved.getId())).isFalse();
+    }
 }
