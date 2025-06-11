@@ -27,8 +27,12 @@ $ java -jar target/mads-todolist-inicial-0.0.1-SNAPSHOT.jar
 Una vez lanzada la aplicación puedes abrir un navegador y probar la página de inicio:
 
 - [http://localhost:8080/login](http://localhost:8080/login)
-# TodoListSpringBoot
+## Enlaces útiles
 
-## Tablero de trello 
-https://trello.com/invite/b/6837d58ba9970fabe110537a/ATTIcdcc28c9b7a033f8d54ef1239426ebc58EDEAF90/todolist-epn
+- **Tablero de Trello:**  
+    [Tablero del proyecto en Trello](https://trello.com/invite/b/6837d58ba9970fabe110537a/ATTIcdcc28c9b7a033f8d54ef1239426ebc58EDEAF90/todolist-epn)
+
+- **Docker Hub:**  
+    [Imagen del proyecto en Docker Hub](https://hub.docker.com/r/aidmora/mads-todolist)
+
 
