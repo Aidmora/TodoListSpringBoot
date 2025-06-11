@@ -13,7 +13,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -104,5 +106,29 @@ public class RegisteredControllerTest {
                                 .andExpect(status().isOk())
                                 // Verificamos que el navbar esté presente
                                 .andExpect(content().string(containsString("navbar navbar-expand-lg")));
+        }
+
+        @Test
+        void testBloquearYHabilitarDesdeVista() throws Exception {
+                // admin ya creado en @BeforeEach
+                // registramos usuario normal
+                UsuarioData u = new UsuarioData();
+                u.setEmail("u@u.com");
+                u.setPassword("p");
+                UsuarioData saved = usuarioService.registrar(u);
+
+                // Bloquear
+                mockMvc.perform(post("/registrados/" + saved.getId() + "/bloquear")
+                                .sessionAttr("idUsuarioLogeado", adminId))
+                                .andExpect(status().is3xxRedirection());
+
+                assertThat(usuarioService.isUsuarioBloqueado(saved.getId())).isTrue();
+
+                // Habilitar
+                mockMvc.perform(post("/registrados/" + saved.getId() + "/habilitar")
+                                .sessionAttr("idUsuarioLogeado", adminId))
+                                .andExpect(status().is3xxRedirection());
+
+                assertThat(usuarioService.isUsuarioBloqueado(saved.getId())).isFalse();
         }
 }

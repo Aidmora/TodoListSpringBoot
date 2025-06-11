@@ -5,6 +5,8 @@ import madstodolist.dto.LoginData;
 import madstodolist.dto.RegistroData;
 import madstodolist.dto.UsuarioData;
 import madstodolist.service.UsuarioService;
+import madstodolist.service.UsuarioService.LoginStatus;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,6 +57,9 @@ public class LoginController {
             return "formLogin";
         } else if (loginStatus == UsuarioService.LoginStatus.ERROR_PASSWORD) {
             model.addAttribute("error", "Contraseña incorrecta");
+            return "formLogin";
+        } else if (loginStatus == LoginStatus.BLOQUEADO) {
+            model.addAttribute("error", "Tu cuenta está bloqueada. Contacta al administrador.");
             return "formLogin";
         }
         return "formLogin";

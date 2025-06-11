@@ -23,7 +23,8 @@ public class Usuario implements Serializable {
     private String password;
     @Column(name = "administrador", nullable = false)
     private boolean administrador = false;
-
+    @Column(nullable = false)
+    private boolean bloqueado = false;
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
@@ -98,6 +99,14 @@ public class Usuario implements Serializable {
 
     public void setAdministrador(boolean administrador) {
         this.administrador = administrador;
+    }
+
+    public boolean isBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(boolean bloqueado) {
+        this.bloqueado = bloqueado;
     }
 
     // Método helper para añadir una tarea a la lista y establecer la relación
